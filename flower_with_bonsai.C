@@ -138,7 +138,13 @@ int flower_with_bonsai(const char *filename="../wcsim.root",
 			float* bsQ_a = &bsQ[0];
 
 			if (verbose) std::cout << "Fitting event vertex with hk-BONSAI ..." << std::endl;
-			bonsai->BonsaiFit(bsVertex, bsResult, bsGood, bsNsel, bsNhit, bsCAB_a, bsT_a, bsQ_a);
+			try {
+			  bonsai->BonsaiFit(bsVertex, bsResult, bsGood, bsNsel, bsNhit, bsCAB_a, bsT_a, bsQ_a);
+			}
+			catch(int & e) {
+			  cerr << "BONSAI threw an error " << e << endl;
+			  continue;
+			}
 			if (verbose){
 			  std::cout << "Vertex found at:";
 			  for(int iv = 0; iv < 4; iv++)
